@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 
-const NoteModel = () => {
+const NoteModel = ({closemodel,addNote}) => {
     const [title,settitle]=useState("");
     const [description,setdescription]=useState("");
+    const navigate = useNavigate();
+
     const handleSubmit=async(e)=>{
         e.preventDefault();
-        
+        addNote(title,description)
+
+         
     }
   return (
     <div className='flex justify-center items-center mt-[10rem]'>
@@ -37,7 +42,9 @@ const NoteModel = () => {
         <button className='bg-teal-500 p-3 w-25'>
             Create
         </button>
-        <button className='bg-red-500 p-3 w-25'>
+        <button 
+        onClick={closemodel}
+        className='bg-red-500 p-3 w-25'>
             Cancle
         </button>
         </div>
