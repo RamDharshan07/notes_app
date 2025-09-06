@@ -26,9 +26,9 @@ router.post('/add',middleware,async(req,res)=>{
 
 })
 
-router.get('/',async(req,res)=>{
+router.get('/',middleware,async(req,res)=>{
     try{
-        const notes=await Note.find()
+        const notes=await Note.find({userId:req.user.id})
         return res.status(200).json({success:true,notes})
 
     }
@@ -48,6 +48,20 @@ router.put('/:id',async(req,res)=>{
     catch(err)
     {
         return res.status(500).json({success:false,message:"cant updata noets"})
+    }
+})
+
+router.delete('/:id',async(req,res)=>{
+    try{
+        const {id}=req.params;
+        const deletenote=await Note.findByIdAndDelete(id)
+        return res.status(200).json({success:true,deletenote})
+
+    }
+    catch(err)
+    {
+        return res.status(500).json({success:false,message:"cant delete notes"})
+
     }
 })
 

@@ -21,6 +21,7 @@ const middleware = async (req, res, next) => {
 
     req.user = { name: user.name, id: user._id };
     console.log(req.user);
+    
     next();
   } catch (err) {
     console.error("Middleware error:", err);

@@ -60,5 +60,10 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get('/verify',async(req,res)=>{
+  console.log("error is")
+  return res.status(200).json({success:true})
+
+})
 
 export default router;

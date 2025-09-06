@@ -7,6 +7,8 @@ const Home = () => {
   const [isModelOpen, setModelOpen] = useState(false);
   const [notes,setNotes]=useState([])
   const [currentNote,setcurrenNote]=useState(null);
+  const [query,setquery]=useState("")
+  const [filterNotes,setfilterNotes]=useState(false)
   const closemodel=()=>{
     setModelOpen(false);
   }
@@ -84,21 +86,55 @@ const Home = () => {
           
         }
         }
-  
+        const deleteNote = async(id)=>{
+          try{
+          const response = await axios.delete(
+            `http://localhost:5000/api/note/${id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+              },
+            }
+          );
+          if(response.data.success)
+          {
+            fetchNotes();
+            
+            
+          }
+        }
+        catch(err)
+        {
+          console.log(err);
+          
+        }
+        }
+        //search functionality
+        useEffect(()=>{
+          setfilterNotes(
+            notes.filter((note)=>note.title.toLowerCase().includes(query.toLowerCase()))
+          ||notes.filter((note)=>note.title.toLowerCase().includes(query.toLowerCase()))
+
+          )
+
+        },[query,notes])
   return (
     <div className="bg-gray-100 min-h-screen">
-      <Navbar />
+      <Navbar
+      setquery={setquery}
+      />
 
       <div className="px-8 pt-4 grid grid-cols-1 gap-5 md:grid-cols-3">
         {
-          notes.map(note=>
+          filterNotes.length>0 ? filterNotes.map(note=>
             (
               <NoteCard
               note={note}
               onEdit={onEdit}
+              deleteNote={deleteNote}
               />
             )
-          )
+          ):<p>no notes</p>
         }
       </div>
 

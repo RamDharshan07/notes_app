@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/ContextProvider";
-const Navbar = () => {
+const Navbar = ({setquery}) => {
   const { user } = useAuth();
   return (
     <div className="bg-gray-800 p-4 text-white flex justify-between items-center">
@@ -13,6 +13,8 @@ const Navbar = () => {
         type="text"
         placeholder="Search notes"
         className="bg-gray-600 px-4 py-2 rounded"
+        
+        onChange={(e)=>setquery(e.target.value)}
       />
       <div>
         {!user ? (
