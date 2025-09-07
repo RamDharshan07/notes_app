@@ -7,12 +7,15 @@ const NoteModel = ({closemodel,addNote,currentNote,editNote}) => {
     const navigate = useNavigate();
     
     useEffect(()=>{
-    if(currentNote)
-    {
-      settitle(currentNote.title)
-      setdescription(currentNote.description)
-    }
-    },[currentNote])
+  if(currentNote) {
+    settitle(currentNote.title)
+    setdescription(currentNote.description)
+  } else {
+    settitle("")
+    setdescription("")
+  }
+},[currentNote])
+
 
     console.log(currentNote);
 

@@ -8,10 +8,14 @@ const ContextProvider = ({children}) => {
     const login=(user)=>{
         setUser(user);
     }
+     const Logout=()=>{
+        localStorage.removeItem('token')
+        setUser(null);
+      }
     useEffect(()=>{
       const verifyuser=async()=>{
         try{
-          constres=await axios.get('http://localhost:5000/api/auth/verify',{
+          const res=await axios.get('http://localhost:5000/api/auth/verify',{
             headers:{
               Authorization:`Bearer ${localStorage.getItem("token")}`,
             }
@@ -34,7 +38,7 @@ const ContextProvider = ({children}) => {
     },[])
   return (
     
-        <authContext.Provider value={{user,login}}>
+        <authContext.Provider value={{user,login,Logout}}>
           {children}
         </authContext.Provider>
       

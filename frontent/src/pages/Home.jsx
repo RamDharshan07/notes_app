@@ -17,7 +17,11 @@ const Home = () => {
   },[])
   const fetchNotes=async()=>{
       try{
-        const {data}=await axios.get("http://localhost:5000/api/note")
+        const {data}=await axios.get("http://localhost:5000/api/note",{
+          headers:{
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        })
         setNotes(data.notes)
       }
       catch(err)
@@ -139,7 +143,11 @@ const Home = () => {
       </div>
 
       <button 
-      onClick={()=>setModelOpen(true)}
+      onClick={()=>{
+        setModelOpen(null)
+        setModelOpen(true)
+      }
+      }
       className="bg-teal-500 text-white text-2xl font-bold p-4 rounded-full fixed right-4 bottom-4 ">
         +
       </button>

@@ -2,7 +2,7 @@ import express from "express";
 import User from "../models/User.js";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-
+import middleware from "../middleware/middleware.js";
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
@@ -60,9 +60,9 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get('/verify',async(req,res)=>{
-  console.log("error is")
-  return res.status(200).json({success:true})
+router.get('/verify',middleware,async(req,res)=>{
+  console.log("error is",req)
+  return res.status(200).json({success:true,user:req.user})
 
 })
 
